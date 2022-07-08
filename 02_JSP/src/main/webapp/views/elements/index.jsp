@@ -11,11 +11,9 @@
 	<!-- HTML 주석 -->
 	<%-- JSP 주석 --%>
 	
-
-
 	<%-- 선언문(Declaration) 태그 --%>
 	<%!
-		private String name = "문인수";
+		private String name = "박현진";
 	
 		public String getName() {
 			return this.name;
@@ -43,7 +41,6 @@
 	
 	1부터 10까지의 합은 <span style="color:red"><% out.print(sum); %></span>입니다. <br>
 	1부터 10까지의 합은 <span style="color:blue"><%= sum %></span>입니다. <br>
-	
-	
+
 </body>
 </html>
