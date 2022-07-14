@@ -68,6 +68,20 @@
 		변수와 URL, 조건문, 반복문 등의 로직과 관련된 액션 태그를 제공한다. 
 	</p>
 
-	<a href="${ pageContext.request.contextPath }/views/actiontag/jstl/core.jsp">Views Details</a>
+	<a href="${ pageContext.request.contextPath }/views/actiontag/jstl/core.jsp">JSPL Core Tags</a>
+	
+	<h4>2-2) JSTL Formatting tags</h4>
+	<p>
+		숫자의 포맷을 통화 기호, ',' 표시, % 표시 등 원하는 쓰임에 맞게 지정할 수 있는 태그이다.
+	</p>
+	
+	<a href="${ pageContext.request.contextPath }/views/actiontag/jstl/formatting.jsp">Formatting tags</a>
+	
+	<h4>2-3) JSTL Function Library</h4>
+	<p>
+		EL 구문에서 문자열 처리에 관련된 메소드들을 사용할 수 있게 제공하는 라이브러리이다.
+	</p>
+	
+	<a href="${ pageContext.request.contextPath }/views/actiontag/jstl/function.jsp">Function Library</a>
 </body>
 </html>
