@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>AJAX (Asynchronous JavaScript and XML)</title>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 </head>
 <body>
 	<h1>AJAX (Asynchronous JavaScript and XML)</h1>
@@ -100,5 +101,168 @@
 			xhr.send("name=홍길동&age=24");
 		}
 	</script>
+	
+	<h2>2. jQuery를 이용한 AJAX 테스트</h2>
+	<h3>1) GET 방식으로 서버에 데이터를 전송 및 응답</h3>
+	
+	입력 : <input type="text" id="input1" size="30"/> <br>
+	출력 : <input type="text" id="output1" size="30" readonly/> <br><br>
+	
+	<button id="btn3">GET 방식 전송</button>
+	
+	<h3>2) POST 방식으로 서버에 여러 개의 데이터를 전송 및 응답</h3>
+		
+	이름 : <input type="text" id="name"/> <br>
+	나이 : <input type="text" id="age"/> <br>
+	출력 : <input type="text" id="output2" size="30" readonly/> <br><br>
+	
+	<button id="btn4">POST 방식 전송</button>
+
+
+	<!-- GSON 라이브러리 추가 후   --> 
+	<h3>3) 서버에 데이터 전송 후, 응답을 객체(Object)로 받기</h3>
+
+	회원 번호 : <input type="text" id="userNo"/>
+	
+	<button id="btn5">조회</button><br> <br>
+	
+	<textarea id="textarea5" rows="5" cols="60"></textarea>
+	
+	<h3>4) 서버에 데이터 전송 후, 응답을 리스트(List로 받기)</h3>
+	
+	성별 : 
+	<label><input type="radio" name ="gender" value="남자" checked>남자</label>
+	<label><input type="radio" name ="gender" value="여자">여자</label>
+	
+	<button id="btn6">조회</button><br> <br>
+	<textarea id="textarea6" rows="5" cols="60"></textarea>
+
+
+	<script>
+		$(document).ready(function(){
+			
+			// 1) GET 방식으로 서버에 데이터를 전송 및 응답
+			$("#btn3").on("click", function() {
+				let input = $("#input1").val();
+
+				$.ajax({
+					// 전송 방식(GET, POST)
+					type: "GET",
+					// 데이터를 전송(요청)할 URL 
+					url: "${ path }/jqAjax1.do",
+					// 요청 시 전달할 파라미터 설정
+					data: {
+						// 프로퍼티 : 변수명 → 같을 경우 하나만 적는다
+						input //'input': input
+					},
+					// AJAX 통신 성공 시 실행될 콜백 함수
+					success: function(data) {
+						console.log(data);
+						
+						$("#output1").val(data);
+					},
+					// AJAX 통신 실패 시 실행될 콜백 함수
+					error: function(error) {
+						console.log(error);
+					},
+					// AJAX 통신 성공 여부와 상관없이 실행될 콜백함수
+					complete: function() {
+						console.log("complete");
+					}
+				});
+			});
+			
+			// 2) POST 방식으로 서버에 여러 개의 데이터를 전송 및 응답
+			$("#btn4").on("click", () => {
+				let name = $("#name").val();
+				let age = $("#age").val();
+			
+				$.ajax({
+					type: "POST",
+					url: "${ path }/jqAjax1.do",
+					data: {
+						name, // 'name': name,
+						age, //'age': age;,
+					},
+					success: (data) => {
+						console.log(data);
+						
+						$("#output2").val(data);
+					},
+					error: (error) => {
+						console.log(error);
+					}
+				});
+				
+			});
+			
+			// 3) 서버에 데이터 전송 후, 응답을 객체(Object)로 받기
+			$("#btn5").on("click", () => {
+				let userNo = $("#userNo").val();
+				
+				$.ajax({
+					type: "GET",
+					url: "${ path }/jqAjax2.do",
+					dataType: "json", // 응답 데이터 형식
+					data: {
+						userNo
+					},
+					success: (obj) => {
+						console.log(obj);
+						
+						let result = "";
+						if(obj !== null) {
+							result = "회원번호 : " + obj.no + "," + "이름 : " + obj.name + 
+									 ", 나이 : " + obj.age + ", 성별 : "  + obj.gender;
+						} else {
+							result = "사용자 정보가 없습니다.";
+						}
+						$("#textarea5").val(result);
+					},
+					error: (error) => {
+						console.log(error);
+					}
+				});
+			});
+			
+			// 4) 서버에 데이터 전송 후, 응답을 리스트(List로 받기)
+			$("#btn6").on("click", () => {
+				// input 태그 중 name=gender이고 chenck 된 value 소환
+				let gender = $("input[name=gender]:checked").val();
+				
+				$.ajax({
+					type: "POST",
+					url: "${ path }/jqAjax2.do",
+					dataType: "json",
+					data : {
+						gender // 'gender': gender → 속성명 : 변수명
+					},
+					success: (list) => {
+						console.log(list);
+						
+						let result = "";
+						$.each(list, (i) => {
+							result += 
+								"회원번호 : " + list[i].no + "," 
+								+ "이름 : " + list[i].name 
+								+ ", 나이 : " + list[i].age + ", 성별 : "  
+								+ list[i].gender + "\n";
+						});
+						
+						$("#textarea6").val(result);
+					},
+					error: (error) => {
+						console.log(error);
+					}
+				});
+			});
+		});
+	</script>
+	
+	
+<br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br>
+s
 </body>
 </html>
