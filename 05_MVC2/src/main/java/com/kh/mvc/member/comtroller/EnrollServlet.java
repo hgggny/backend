@@ -7,9 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.mvc.common.util.EncryptUtil;
+import com.kh.mvc.member.model.service.MemberService;
 import com.kh.mvc.member.model.vo.Member;
 
-@WebServlet("/member/enroll")
+@WebServlet(name = "enroll", urlPatterns = "/member/enroll")
 public class EnrollServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -24,7 +26,7 @@ public class EnrollServlet extends HttpServlet {
 
     @Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	request.setCharacterEncoding("UTF-8");
+//    	request.setCharacterEncoding("UTF-8");
     	
     	// 멤버 객체 만들기
     	Member member = new Member();
@@ -39,6 +41,22 @@ public class EnrollServlet extends HttpServlet {
     	member.setHobby(String.join(",", request.getParameterValues("hobby")));
     	
     	System.out.println(member);
+    	
+    	
+    	int result = new MemberService().save(member);
+
+    	if(result > 0) {
+    		// 회원 가입 완료
+			request.setAttribute("msg", "회원 가입 완료-!");
+			request.setAttribute("location", "/");
+    	} else {
+    		// 회원 가입 실패
+			request.setAttribute("msg", "회원 가입 실패-!");
+			request.setAttribute("location", "/member/enroll");
+			
+    	}
+    	
+    	request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 	}
 
 }

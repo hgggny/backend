@@ -25,6 +25,7 @@
 							<td>
 								<input type="text" name="userId" id="userId" placeholder="아이디" 
 									value="${ empty cookie.saveId ? '' : cookie.saveId.value}" required>
+								<!--  쿠키값이 비어있으면 ""(빈 문자열)을 주고, 아닐 경우 쿠키의 값을 적어준다.  -->
 							</td>
 							<td></td>
 						</tr>
@@ -40,6 +41,7 @@
 							<td colspan="2">
 								<label><input type="checkbox" name="saveId"
 											${ empty cookie.saveId ? "" : "checked"}>아이디 저장</label>
+								<!--  쿠키값이 비어있으면 ""(빈 문자열)을 주고 없으면 cheked -->			
 								<input type="button" value="회원가입" onclick="location.href = '${ path }/member/enroll';"> 
 							</td>
 						</tr>
@@ -55,7 +57,7 @@
 					</tr>
 					<tr>
 						<td>
-							<button>내 정보</button>
+							<button onclick="location.href='${ path }/member/myPage'">내 정보</button>
 						</td>
 						<td>
 							<button onclick="location.replace('${ path }/logout')">로그아웃</button>

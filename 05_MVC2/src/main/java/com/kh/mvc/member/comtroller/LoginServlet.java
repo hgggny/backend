@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import com.kh.mvc.member.model.service.MemberService;
 import com.kh.mvc.member.model.vo.Member;
 
-@WebServlet("/login")
+@WebServlet(name = "login", urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -27,7 +27,6 @@ public class LoginServlet extends HttpServlet {
 		String saveId = request.getParameter("saveId");
 		
 		System.out.println(userId + ", " + userPwd + ", " + saveId);
-		
 		
 		// 서블릿이 직접 비즈니스로직을 처리하는 것이 아니기 때문에 
 		// MemberService 객체의 login 메소드를 이용해 요청
@@ -60,10 +59,11 @@ public class LoginServlet extends HttpServlet {
 		// loginMember가 null이 아니면 로그인 성공
 		if(loginMember != null ) {
 			// loginMember 객체를 세션에 저장
+			// 세션을 가져온다. 
 			session = request.getSession();
-			
+			// 세션을 저장한다. 
 			session.setAttribute("loginMember", loginMember);
-			// 로그인이 완료되면 메인 화면으로 이동시킨다. 
+			// 로그인이 완료되면 메인 화면으로 이동시킨다. (리다이렉트)
 			response.sendRedirect(request.getContextPath() + "/");
 		} else {
 			// 로그인 실패에 대한 메시지를 띄어주고 메인화면으로 이동
