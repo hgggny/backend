@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.kh.mvc.common.wrapper.EncryptPasswordWrapper;
 
 // servletNames = {"EnrollServlet", "LoginServlet"} - 서블릿이 실행되기 전에 실행될 것이다. 
-@WebFilter(filterName = "encrypt", servletNames = {"enroll", "login"})
+@WebFilter(filterName = "encrypt", servletNames = {"enroll", "login", "updatePwd"})
 public class EncryptFilter extends HttpFilter implements Filter {
        
     public EncryptFilter() {
